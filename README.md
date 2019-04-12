@@ -5,6 +5,7 @@ sudo nano /etc/sysconfig/network
 After This Command insert:
 
 HOSTNAME=myserver.domain.com
+
 127.0.0.1      localhost localhost.localdomain
 
 After Screenshot 10 edit VagrantFile:
