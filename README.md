@@ -4,6 +4,7 @@ Apache Tomcate in CentOS7
 Command:
 ----------
 [Note: Vagrant ssh command is used for to enter into the centos7, if you had already in the centos7 than it is no need]
+
 $ vagrant ssh
 
 [vagrant@localhost ~]$ sudo yum install epel-release
