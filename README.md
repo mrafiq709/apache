@@ -131,3 +131,8 @@ Changing Default port:
 now http://192.168.33.10:8090/
 
 Done!
+
+[Note: For AWS Server also need to change like bellow:
+ </br> </br>
+<a href="https://imgur.com/4XarPTt"><img src="https://i.imgur.com/4XarPTt.png" title="source: imgur.com" /></a>
+]
