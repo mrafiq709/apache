@@ -110,9 +110,9 @@ Changing Default port:
 2. cd /opt/tomcat/conf
 3. vi server.xml
 4. press i for insert
-5. <Connector port="8090" protocol="HTTP/1.1"
+5. /*<Connector port="8090" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443" />
+               redirectPort="8443" />*/
 6. press Esc
 7. :wq and press enter.
 8. exit from centos7
