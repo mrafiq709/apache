@@ -156,10 +156,12 @@ $ vi /opt/tomcat/webapps/manager/META-INF/context.xml
 <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
 
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
-</br> </br>
-<a href="https://imgur.com/SSs8dLD"><img src="https://i.imgur.com/SSs8dLD.png" title="source: imgur.com" /></a>
+ </br> </br>
+<a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
 
 $ cd /opt/tomcat/conf
+
+$ vi tomcat-users.xml
 
 <role rolename="manager-gui"/>
 
@@ -174,8 +176,8 @@ $ cd /opt/tomcat/conf
 <user username="deployer" password="deployer" roles="manager-sript"/>
 
 <user username="tomcat" password="s3cret" roles="manager-gui"/>
-
-$ vi tomcat-users.xml
+</br> </br>
+<a href="https://imgur.com/SSs8dLD"><img src="https://i.imgur.com/SSs8dLD.png" title="source: imgur.com" /></a>
 
 $ vagrant reload --provision
 
