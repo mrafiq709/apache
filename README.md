@@ -94,3 +94,7 @@ $ vagrant ssh
 [root@localhost tomcat]# cd bin/
 
 [root@localhost bin]# ./catalina.sh start
+
+Now enter the link to your browser:
+--------------------------------------
+https://localhost:8080/
