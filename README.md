@@ -136,3 +136,49 @@ Done!
  </br> </br>
 <a href="https://imgur.com/4XarPTt"><img src="https://i.imgur.com/4XarPTt.png" title="source: imgur.com" /></a>
 ]
+
+For Access manager app:
+---------------------------------
+go to centos7 then enter bellow command:
+
+$ find / -name context.xml
+
+$ vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
+
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+         
+$ vi /opt/tomcat/webapps/manager/META-INF/context.xml
+
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+         
+$ cd /opt/tomcat/conf
+
+<role rolename="manager-gui"/>
+
+<role rolename="manager-script"/>
+
+<role rolename="manager-jmx"/>
+
+<role rolename="manager-status"/>
+
+<user username="admin" password="admin" roles="manager-gui,manager-script, manager-jmx, manager-status"/>
+
+<user username="deployer" password="deployer" roles="manager-sript"/>
+
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+
+$ vi tomcat-users.xml
+
+$ vagrant reload --provision
+
+$ vagrant ssh
+
+Restart Tomcat-server.
+
+http://192.168.33.10:8090/
+and press manager app button.
+username: tomcat, pass:s3cret
