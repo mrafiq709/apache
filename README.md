@@ -96,4 +96,4 @@ $ vagrant ssh
 
 Now enter the link to your browser:
 --------------------------------------
-https://localhost:8080/
+http://192.168.33.10:8080/
