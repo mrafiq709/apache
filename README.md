@@ -25,6 +25,9 @@ $ vagrant ssh
 
 [vagrant@localhost ~]$ cd ~
 
+[Note: If bellow command not work than enter this two command: "sudo yum update",
+"sudo yum install wget"]
+
 [vagrant@localhost ~]$   wget http://mirror.downloadvn.com/apache/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
 
 [vagrant@localhost ~]$ sudo tar -zxvf apache-tomcat-8.5.39.tar.gz -C /opt/tomcat --strip-components=1
