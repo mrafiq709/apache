@@ -3,7 +3,7 @@ Apache Tomcate in CentOS7
 
 Command:
 ----------
-[Note: Vagrant ssh command is used for to enter into the centos7, if you had already in the centos7 than it is no need]
+[Note: Vagrant ssh command is used for to enter into the centos7, if you had already in the centos7 than it is no need. Here I have use oracle virtual box and vagrant box for installing centos7 in windows OS]
 
 $ vagrant ssh
 
