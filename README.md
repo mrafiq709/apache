@@ -97,3 +97,6 @@ $ vagrant ssh
 Now enter the link to your browser:
 --------------------------------------
 http://192.168.33.10:8080/
+
+</br> </br>
+<a href="https://imgur.com/bWqQKVK"><img src="https://i.imgur.com/bWqQKVK.png" title="source: imgur.com" /></a>
