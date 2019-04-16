@@ -148,13 +148,17 @@ $ vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
 <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
 
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+ </br> </br>
+<a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
          
 $ vi /opt/tomcat/webapps/manager/META-INF/context.xml
 
 <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
 
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
-         
+</br> </br>
+<a href="https://imgur.com/SSs8dLD"><img src="https://i.imgur.com/SSs8dLD.png" title="source: imgur.com" /></a>
+
 $ cd /opt/tomcat/conf
 
 <role rolename="manager-gui"/>
@@ -180,5 +184,7 @@ $ vagrant ssh
 Restart Tomcat-server.
 
 http://192.168.33.10:8090/
+
 and press manager app button.
+
 username: tomcat, pass:s3cret
