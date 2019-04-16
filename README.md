@@ -77,6 +77,12 @@ HOSTNAME=myserver.domain.com
 
 [root@localhost bin]# ./catalina.sh start
 
+Edit VagrantFile like below 2 lines:
+-------------------------------
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  
+  config.vm.network "private_network", ip: "192.168.33.10"
+
 $ vagrant reload --provision
 
 $ vagrant ssh
@@ -88,10 +94,3 @@ $ vagrant ssh
 [root@localhost tomcat]# cd bin/
 
 [root@localhost bin]# ./catalina.sh start
-
-
-After Screenshot 10 edit VagrantFile:
--------------------------------
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  
-  config.vm.network "private_network", ip: "192.168.33.10"
