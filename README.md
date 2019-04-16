@@ -83,8 +83,8 @@ $ vagrant ssh
 [root@localhost bin]# ./catalina.sh start
 
 
-sudo nano /etc/sysconfig/network
-After This Command insert:
+"sudo nano /etc/sysconfig/network" After This Command insert:
+-------------------------------------------------------------
 
 HOSTNAME=myserver.domain.com
 
