@@ -58,7 +58,7 @@ $ vagrant ssh
 
 [root@localhost ~]# sudo nano /etc/sysconfig/network
 
-"sudo nano /etc/sysconfig/network" After This Command insert:
+"sudo nano /etc/sysconfig/network" After This Command insert bellow 2 line:
 -------------------------------------------------------------
 
 HOSTNAME=myserver.domain.com
