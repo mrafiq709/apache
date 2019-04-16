@@ -58,6 +58,13 @@ $ vagrant ssh
 
 [root@localhost ~]# sudo nano /etc/sysconfig/network
 
+"sudo nano /etc/sysconfig/network" After This Command insert:
+-------------------------------------------------------------
+
+HOSTNAME=myserver.domain.com
+
+127.0.0.1      localhost localhost.localdomain
+
 [root@localhost ~]# /etc/init.d/network restart
 
 [root@localhost ~]# cd /opt/
@@ -82,13 +89,6 @@ $ vagrant ssh
 
 [root@localhost bin]# ./catalina.sh start
 
-
-"sudo nano /etc/sysconfig/network" After This Command insert:
--------------------------------------------------------------
-
-HOSTNAME=myserver.domain.com
-
-127.0.0.1      localhost localhost.localdomain
 
 After Screenshot 10 edit VagrantFile:
 -------------------------------
