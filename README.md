@@ -113,6 +113,10 @@ Changing Default port:
 5. Connector port="8090" protocol="HTTP/1.1"
              connectionTimeout="20000"
              redirectPort="8443"
+             
+ </br> </br>
+<a href="https://imgur.com/QQsW33t"><img src="https://i.imgur.com/QQsW33t.png" title="source: imgur.com" /></a>
+
 6. press Esc
 7. :wq and press enter.
 8. exit from centos7
