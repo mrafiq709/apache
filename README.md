@@ -86,7 +86,7 @@ $ vagrant reload --provision
 
 $ vagrant ssh
 
-[vagrant@localhost ~]$ cd /opt/
+[vagrant@localhost ~]$ cd /opt/tomcat
 
 [vagrant@localhost tomcat]$ sudo su
 
