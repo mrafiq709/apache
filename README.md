@@ -41,8 +41,6 @@ $ vagrant ssh
 
 [root@localhost bin]# ./catalina.sh start
 
-$ vagrant ssh
-
 [vagrant@localhost ~]$ cd /opt/tomcat
 
 [vagrant@localhost tomcat]$ ls
