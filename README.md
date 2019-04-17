@@ -190,3 +190,5 @@ http://192.168.33.10:8090/
 and press manager app button.
 
 username: tomcat, pass: s3cret
+</br> </br>
+<a href="https://imgur.com/GjhznDK"><img src="https://i.imgur.com/GjhznDK.png" title="source: imgur.com" /></a>
