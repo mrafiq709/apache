@@ -50,6 +50,10 @@ sudo firewall-cmd --reload
 Now Disable SELinux:
 --------------------------
 
+$ yum provides /usr/sbin/semanage
+
+$ yum -y install policycoreutils-python
+
 $ sudo setenforce 0
 
 $ sudo vi /etc/selinux/config
