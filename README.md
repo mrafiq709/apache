@@ -112,6 +112,36 @@ or
 http://localhost:8080/info.php
 
 
+Laravel Project Configuration:
+-------------------------------------
+1. Create laravel project
+
+2. Move the project to "/var/www/html/" path.
+
+3. go to "/var/www/html/my_app"
+
+
+Check Apache Group:
+---------------------
+
+ps aux | egrep '(apache|httpd)'
+
+
+Change Ownership:
+---------------------
+
+sudo chown -R $USER:apache storage
+
+sudo chown -R $USER:apache bootstrap/cache
+
+
+Then to set directory permission try this:
+
+
+chmod -R 775 storage
+
+chmod -R 775 bootstrap/cache
+
 
 
 
