@@ -18,6 +18,7 @@ sudo systemctl enable httpd.service
 sudo systemctl status httpd.service
 
 http://localhost:8080/
+
 Done !
 
 For Running php project configure like below
