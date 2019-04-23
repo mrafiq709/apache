@@ -92,7 +92,8 @@ $sestatus
 
 http://192.168.33.10/info.php 
 
-[note: this ip is come from vagrant file: For server you should use your ip address.
+[
+note: this ip is come from vagrant file: For server you should use your ip address.
 
   #Create a private network, which allows host-only access to the machine
   
