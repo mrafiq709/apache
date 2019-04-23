@@ -136,7 +136,7 @@ sudo chown -R $USER:apache bootstrap/cache
 
 
 Then to set directory permission try this:
-
+--------------------------------------------
 
 chmod -R 775 storage
 
