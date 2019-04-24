@@ -159,21 +159,35 @@ sudo vi my_app.conf
 
 
 <VirtualHost *:80>
+
    ServerName localhost
+   
    ServerAlias localhost
+   
    ServerAdmin webmaster@example.com
+   
    DocumentRoot /var/www/my_app/public
+   
 
    <Directory /var/www/my_app/public>
+   
        Options -Indexes
+       
        DirectoryIndex index.php index.html
+       
        AllowOverride All
+       
        Require all granted
+       
    </Directory>
+   
 
    ErrorLog /var/log/httpd/my_app-error.log
+   
    CustomLog /var/log/httpd/my_app-access.log combined
+   
 </VirtualHost>
+
 
 
 sudo systemctl restart httpd.service
