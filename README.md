@@ -29,7 +29,7 @@ sudo vi  /etc/httpd/conf/httpd.conf
 </br>
 <a href="https://imgur.com/8yQkS0i"><img src="https://i.imgur.com/8yQkS0i.png" title="source: imgur.com" /></a>
 
-Note: For AWS server You have to edit --> Listen 8080
+Note: For AWS server You have to edit the port --> Listen 8080
 </br>
 <a href="https://imgur.com/HhujVVc"><img src="https://i.imgur.com/HhujVVc.png" title="source: imgur.com" /></a>
 
