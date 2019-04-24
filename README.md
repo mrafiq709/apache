@@ -146,6 +146,6 @@ chmod -R 775 storage
 
 chmod -R 775 bootstrap/cache
 
-
-
+</br>
+<a href="https://imgur.com/nNkFVaq"><img src="https://i.imgur.com/nNkFVaq.png" title="source: imgur.com" /></a>
 
