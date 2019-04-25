@@ -66,24 +66,18 @@ Now Disable SELinux:
     
     $sudo shutdown -r now
     $sestatus
-
-
-[vagrant@localhost ~]$ sudo systemctl restart httpd.service
-
+    [vagrant@localhost ~]$ sudo systemctl restart httpd.service
 
 --> info.php file is located in "/var/www/html" Path:
-
 
 http://192.168.33.10/info.php 
 
 [
 note: this ip is come from vagrant file: For server you should use your ip address.
 
-  #Create a private network, which allows host-only access to the machine
-  
-  #using a specific IP.
-  
-  config.vm.network "private_network", ip: "192.168.33.10"
+    #Create a private network, which allows host-only access to the machine
+    #using a specific IP.
+    config.vm.network "private_network", ip: "192.168.33.10"
   
 ]
 
@@ -104,23 +98,21 @@ Laravel Project Configuration:
 Check Apache Group:
 ---------------------
 
-ps aux | egrep '(apache|httpd)'
+    ps aux | egrep '(apache|httpd)'
 
 
 Change Ownership:
 ---------------------
 
-sudo chown -R $USER:apache storage
-
-sudo chown -R $USER:apache bootstrap/cache
+    sudo chown -R $USER:apache storage
+    sudo chown -R $USER:apache bootstrap/cache
 
 
 Then to set directory permission try this:
 --------------------------------------------
 
-chmod -R 775 storage
-
-chmod -R 775 bootstrap/cache
+    chmod -R 775 storage
+    chmod -R 775 bootstrap/cache
 
 </br>
 <a href="https://imgur.com/nNkFVaq"><img src="https://i.imgur.com/nNkFVaq.png" title="source: imgur.com" /></a>
@@ -129,46 +121,26 @@ Create Virtual Host For this Project:
 ------------------------------------------
 Step 1: Go to "/var/www/html/etc/httpd/conf.d/"
 
-Step 2: sudo touch my_app.conf
+    sudo touch my_app.conf
+    sudo vi my_app.conf
 
-sudo vi my_app.conf
+    <VirtualHost *:80>
+        ServerName localhost
+        ServerAlias localhost
+        ServerAdmin webmaster@example.com
+        DocumentRoot /var/www/my_app/public
+            <Directory /var/www/my_app/public>
+                Options -Indexes
+                DirectoryIndex index.php index.html
+                AllowOverride All
+                Require all granted
+           </Directory>
+        ErrorLog /var/log/httpd/my_app-error.log
+        CustomLog /var/log/httpd/my_app-access.log combined
+    </VirtualHost>
 
-
-<VirtualHost *:80>
-
-   ServerName localhost
-   
-   ServerAlias localhost
-   
-   ServerAdmin webmaster@example.com
-   
-   DocumentRoot /var/www/my_app/public
-   
-
-   <Directory /var/www/my_app/public>
-   
-       Options -Indexes
-       
-       DirectoryIndex index.php index.html
-       
-       AllowOverride All
-       
-       Require all granted
-       
-   </Directory>
-   
-
-   ErrorLog /var/log/httpd/my_app-error.log
-   
-   CustomLog /var/log/httpd/my_app-access.log combined
-   
-</VirtualHost>
-
-
-
-sudo systemctl restart httpd.service
-
-sudo systemctl status httpd.service
+    sudo systemctl restart httpd.service
+    sudo systemctl status httpd.service
 
 
 </br>
