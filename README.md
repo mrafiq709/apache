@@ -65,25 +65,26 @@ http://192.168.33.10:8080/
 
 Changing Default port:
 ------------------------
-    1. cd /opt/tomcat/conf
-    2. vi server.xml
-    3. press i for insert then chnage the port from 8080 to 8090 according bellow
-    4. Connector port="8090" protocol="HTTP/1.1"
+    cd /opt/tomcat/conf
+    vi server.xml
+    press i for insert then chnage the port from 8080 to 8090 according bellow
+    <Connector port="8090" protocol="HTTP/1.1"
           connectionTimeout="20000"
-          redirectPort="8443"      
+          redirectPort="8443"/>      
  </br> </br>
 <a href="https://imgur.com/QQsW33t"><img src="https://i.imgur.com/QQsW33t.png" title="source: imgur.com" /></a>
 
-    5. press Esc
-    6. :wq and press enter.
-    7. exit from centos7
-    8. go to "/vagrant/centos7/" folder
-    9. vagrant reload --provision
-    10. vagrant ssh
-    11. cd /opt/tomcat
-    12. sudo su
-    13. cd bin/
-    14. ./catalina.sh start
+press Esc
+:wq and press enter.
+exit from centos7
+go to "/vagrant/centos7/" folder
+    
+    vagrant reload --provision
+    vagrant ssh
+    cd /opt/tomcat
+    sudo su
+    cd bin/
+    ./catalina.sh start
 
 now http://192.168.33.10:8090/
 
