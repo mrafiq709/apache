@@ -35,70 +35,55 @@ Command:
 "sudo nano /etc/sysconfig/network" After This Command insert bellow 2 line:
 -------------------------------------------------------------
 
-HOSTNAME=myserver.domain.com
+    HOSTNAME=myserver.domain.com
+    127.0.0.1      localhost localhost.localdomain
 
-127.0.0.1      localhost localhost.localdomain
-
-[root@localhost ~]# /etc/init.d/network restart
-
-[root@localhost ~]# cd /opt/
-
-[root@localhost opt]# cd tomcat/
-
-[root@localhost tomcat]# cd bin/
-
-[root@localhost bin]# ./catalina.sh shutdown
-
-[root@localhost bin]# ./catalina.sh start
-
+    [root@localhost ~]# /etc/init.d/network restart
+    [root@localhost ~]# cd /opt/
+    [root@localhost opt]# cd tomcat/
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh shutdown
+    [root@localhost bin]# ./catalina.sh start
+    
 Edit VagrantFile like below 2 lines:
 -------------------------------
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  
-  config.vm.network "private_network", ip: "192.168.33.10"
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+    config.vm.network "private_network", ip: "192.168.33.10"
 
-$ vagrant reload --provision
-
-$ vagrant ssh
-
-[vagrant@localhost ~]$ cd /opt/tomcat
-
-[vagrant@localhost tomcat]$ sudo su
-
-[root@localhost tomcat]# cd bin/
-
-[root@localhost bin]# ./catalina.sh start
+    $ vagrant reload --provision
+    $ vagrant ssh
+    [vagrant@localhost ~]$ cd /opt/tomcat
+    [vagrant@localhost tomcat]$ sudo su
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh start
 
 Now enter the link to your browser:
 --------------------------------------
 http://192.168.33.10:8080/
-
 </br> </br>
 <a href="https://imgur.com/bWqQKVK"><img src="https://i.imgur.com/bWqQKVK.png" title="source: imgur.com" /></a>
 
 Changing Default port:
 ------------------------
-1. go to centos7
-2. cd /opt/tomcat/conf
-3. vi server.xml
-4. press i for insert then chnage the port from 8080 to 8090 according bellow
-5. Connector port="8090" protocol="HTTP/1.1"
-             connectionTimeout="20000"
-             redirectPort="8443"
-             
+    1. cd /opt/tomcat/conf
+    2. vi server.xml
+    3. press i for insert then chnage the port from 8080 to 8090 according bellow
+    4. Connector port="8090" protocol="HTTP/1.1"
+          connectionTimeout="20000"
+          redirectPort="8443"      
  </br> </br>
 <a href="https://imgur.com/QQsW33t"><img src="https://i.imgur.com/QQsW33t.png" title="source: imgur.com" /></a>
 
-6. press Esc
-7. :wq and press enter.
-8. exit from centos7
-9. go to "/vagrant/centos7/" folder
-9. vagrant reload --provision
-10. vagrant ssh
-11. cd /opt/tomcat
-12. sudo su
-13. cd bin/
-14. ./catalina.sh start
+    5. press Esc
+    6. :wq and press enter.
+    7. exit from centos7
+    8. go to "/vagrant/centos7/" folder
+    9. vagrant reload --provision
+    10. vagrant ssh
+    11. cd /opt/tomcat
+    12. sudo su
+    13. cd bin/
+    14. ./catalina.sh start
 
 now http://192.168.33.10:8090/
 
@@ -113,47 +98,35 @@ For Access manager app:
 ---------------------------------
 go to centos7 then enter bellow command:
 
-$ find / -name context.xml
-
-$ vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
-
-<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-
+    $ find / -name context.xml
+    $ vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
+    <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
  </br> </br>
 <a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
          
-$ vi /opt/tomcat/webapps/manager/META-INF/context.xml
+    $ vi /opt/tomcat/webapps/manager/META-INF/context.xml
 
-<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-
+    <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
  </br> </br>
 <a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
 
-$ cd /opt/tomcat/conf
+    $ cd /opt/tomcat/conf
+    $ vi tomcat-users.xml
+    <role rolename="manager-gui"/>
+    <role rolename="manager-script"/>
+    <role rolename="manager-jmx"/>
+    <role rolename="manager-status"/>
 
-$ vi tomcat-users.xml
-
-<role rolename="manager-gui"/>
-
-<role rolename="manager-script"/>
-
-<role rolename="manager-jmx"/>
-
-<role rolename="manager-status"/>
-
-<user username="admin" password="admin" roles="manager-gui,manager-script, manager-jmx, manager-status"/>
-
-<user username="deployer" password="deployer" roles="manager-sript"/>
-
-<user username="tomcat" password="s3cret" roles="manager-gui"/>
+    <user username="admin" password="admin" roles="manager-gui,manager-script, manager-jmx, manager-status"/>
+    <user username="deployer" password="deployer" roles="manager-sript"/>
+    <user username="tomcat" password="s3cret" roles="manager-gui"/>
 </br> </br>
 <a href="https://imgur.com/SSs8dLD"><img src="https://i.imgur.com/SSs8dLD.png" title="source: imgur.com" /></a>
 
-$ vagrant reload --provision
-
-$ vagrant ssh
+    $ vagrant reload --provision
+    $ vagrant ssh
 
 Restart Tomcat-server.
 
