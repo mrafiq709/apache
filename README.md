@@ -69,6 +69,13 @@ Now Disable SELinux:
     [vagrant@localhost ~]$ sudo systemctl restart httpd.service
 
 --> info.php file is located in "/var/www/html" Path:
+```
+#info.php
+<?php
+phpinfo();
+?>
+
+```
 
 http://192.168.33.10/info.php 
 
