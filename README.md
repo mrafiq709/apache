@@ -50,3 +50,7 @@ Setting Up Virtual Hosts:
         ErrorLog /var/log/httpd/my_project_name-error.log
         CustomLog /var/log/httpd/my_project_name-access.log combined
     </VirtualHost>
+    
+ Now restart Apache server:
+ ---------------------------
+    sudo service apache2 restart
