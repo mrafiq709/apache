@@ -1,6 +1,9 @@
 # Apache-Install-Ubuntu
 Apache Server Configuration Ubuntu
 
+    Note: Before set up Apache you must have to install PHP:
+    https://github.com/mrafiq709/PHP-install-ubuntu
+
 Command:
 ---------
     sudo apt update
@@ -14,10 +17,10 @@ Command:
     
 Setting Up Virtual Hosts:
 --------------------------
-    sudo mkdir /var/www/your_domain
-    sudo chown -R $USER:$USER /var/www/your_domain
-    sudo chmod -R 755 /var/www/your_domain
-    nano /var/www/your_domain/index.html
+    sudo mkdir /var/www/html/my_project
+    sudo chown -R $USER:$USER /var/www/html/my_project
+    sudo chmod -R 755 /var/www/html/my_project
+    nano /var/www/html/my_project/index.html
     
     Enter bellow code for testing:
     "<html>
