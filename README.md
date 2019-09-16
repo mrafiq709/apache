@@ -14,13 +14,15 @@ Command:
     sudo systemctl restart apache2
     http://your_server_ip
     
-Setting Up Virtual Hosts:
---------------------------
+Give Permission To Access Your Project:
+---------------------------------------
     sudo mkdir /var/www/html/my_project
     sudo chown -R $USER:$USER /var/www/html/my_project
     sudo chmod -R 755 /var/www/html/my_project
-    nano /var/www/html/my_project/index.html
     
+If you have no project then create index.html for testing:
+----------------------------------------------------------
+    nano /var/www/html/my_project/index.html
     Enter bellow code for testing:
     "<html>
     <head>
@@ -31,9 +33,11 @@ Setting Up Virtual Hosts:
     </body>
     </html>"
     
-    sudo nano /etc/apache2/sites-available/your_domain.conf
+Setting Up Virtual Hosts:
+--------------------------
+    sudo nano /etc/apache2/sites-available/project_name.conf
     <VirtualHost *:80>
-    ServerAdmin webmaster@example.com
+        ServerAdmin webmaster@example.com
         ServerName example.com
         ServerAlias www.example.com
         DocumentRoot /var/www/html/my_project_name/public
