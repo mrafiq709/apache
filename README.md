@@ -36,6 +36,7 @@ If you have no project then create index.html for testing:
 Setting Up Virtual Hosts:
 --------------------------
     sudo nano /etc/apache2/sites-available/project_name.conf
+    
     <VirtualHost *:80>
         ServerAdmin webmaster@example.com
         ServerName example.com
