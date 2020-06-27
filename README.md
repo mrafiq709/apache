@@ -24,14 +24,15 @@ If you have no project then create index.html for testing:
 ----------------------------------------------------------
     nano /var/www/html/my_project/index.html
     Enter bellow code for testing:
-    "<html>
+    
+    <html>
     <head>
         <title>Welcome to Your_domain!</title>
     </head>
     <body>
         <h1>Success!  The your_domain virtual host is working!</h1>
     </body>
-    </html>"
+    </html>
     
 Setting Up Virtual Hosts:
 --------------------------
