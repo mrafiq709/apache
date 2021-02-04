@@ -85,8 +85,8 @@ Setting Up Virtual Hosts:
         </Directory>
 
         RewriteEngine on
-        RewriteCond %{SERVER_NAME} =sub.nwest-dev.work [OR]
-        RewriteCond %{SERVER_NAME} =sub.west-dev.work
+        RewriteCond %{SERVER_NAME} =example.com [OR]
+        RewriteCond %{SERVER_NAME} =example2.com
         RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 
     </VirtualHost>
