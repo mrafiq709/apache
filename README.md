@@ -53,6 +53,44 @@ Setting Up Virtual Hosts:
         CustomLog ${APACHE_LOG_DIR}/my_project_name-access.log combined
     </VirtualHost>
     
+    If MIME type errors for IE
+    ----------------------------
+    <VirtualHost *:80>
+        ServerName example.com
+        DocumentRoot /var/www/html/my_project_name/public
+        ErrorLog ${APACHE_LOG_DIR}/my_project_name-error.log
+        CustomLog ${APACHE_LOG_DIR}/my_project_name-access.log combined
+        <Directory /var/www/html/my_project_name/public>
+            Options Indexes FollowSymLinks
+            > # MIME type errors for IE
+            > <FilesMatch \.css$>
+            >     Header set Content-type "text/css"
+            > </FilesMatch>
+            # MIME type errors for IE
+            <FilesMatch \.js$>
+                Header set Content-type "text/javascript"
+            </FilesMatch>
+            # MIME type for .svg files
+            <filesMatch "\.(svg|svgz)$">
+               FileETag None
+               <ifModule mod_headers.c>
+                   Header set Content-type "image/svg+xml"
+               </ifModule>
+            </filesMatch>
+
+            AllowOverride All
+            Options +FollowSymLinks
+            Require all granted
+            DirectoryIndex index.php index.html
+        </Directory>
+
+        RewriteEngine on
+        RewriteCond %{SERVER_NAME} =sub.nwest-dev.work [OR]
+        RewriteCond %{SERVER_NAME} =sub.west-dev.work
+        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+    </VirtualHost>
+    
 Second Virtual Host [if you want to add another project]:
 ---------------------------------------------------------
 
