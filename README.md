@@ -62,10 +62,10 @@ Setting Up Virtual Hosts:
         CustomLog ${APACHE_LOG_DIR}/my_project_name-access.log combined
         <Directory /var/www/html/my_project_name/public>
             Options Indexes FollowSymLinks
-            > # MIME type errors for IE
-            > <FilesMatch \.css$>
-            >     Header set Content-type "text/css"
-            > </FilesMatch>
+            # MIME type errors for IE
+            <FilesMatch \.css$>
+                Header set Content-type "text/css"
+            </FilesMatch>
             # MIME type errors for IE
             <FilesMatch \.js$>
                 Header set Content-type "text/javascript"
