@@ -1,203 +1,140 @@
-# ApacheServerCentos7
-Apache install in centos7
+# Apache-Tomcat-CentOS
+Apache Tomcate in CentOS7
 
-1.Install Apache in CentOS:
----------------------------
-    sudo yum clean all
-    sudo yum -y update
-    sudo yum -y install httpd
-    rpm -q centos-release
-    sudo systemctl start httpd.service
-    sudo systemctl enable httpd.service
-    sudo systemctl status httpd.service
+Command:
+----------
+[Note: Vagrant ssh command is used for to enter into the centos7, if you had already in the centos7 than it is no need. Here I have use oracle virtual box and vagrant box for installing centos7 in windows OS]
 
-http://localhost:8080/
+    $ vagrant ssh
+    [vagrant@localhost ~]$ sudo yum install epel-release
+    [vagrant@localhost ~]$ sudo yum update -y && sudo reboot
+    [vagrant@localhost ~]$ sudo yum install java-1.8.0-openjdk.x86_64
+    [vagrant@localhost ~]$ java -version
+    [vagrant@localhost ~]$ sudo groupadd tomcat
+    [vagrant@localhost ~]$ sudo mkdir /opt/tomcat
+    [vagrant@localhost ~]$ sudo useradd -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
+    [vagrant@localhost ~]$ cd ~
 
-Done !
+[Note: If bellow command not work than enter this two command: "sudo yum update",
+"sudo yum install wget"]
 
-For Running php project configure like below
-----------------------------------------------------
+    [vagrant@localhost ~]$   wget http://mirror.downloadvn.com/apache/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
+    [vagrant@localhost ~]$ sudo tar -zxvf apache-tomcat-8.5.39.tar.gz -C /opt/tomcat --strip-components=1
+    [vagrant@localhost ~]$ cd /opt/tomcat
+    [vagrant@localhost tomcat]$ sudo su
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh start
+    [vagrant@localhost ~]$ cd /opt/tomcat
+    [vagrant@localhost tomcat]$ vi /etc/host
+    [vagrant@localhost tomcat]$ sudo su
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh start
+    [root@localhost ~]# sudo yum insall nano
+    [root@localhost ~]# sudo nano /etc/sysconfig/network
 
-    sudo vi  /etc/httpd/conf/httpd.conf
-</br>
-<a href="https://imgur.com/8yQkS0i"><img src="https://i.imgur.com/8yQkS0i.png" title="source: imgur.com" /></a>
+"sudo nano /etc/sysconfig/network" After This Command insert bellow 2 line:
+-------------------------------------------------------------
 
-Note: For AWS server You have to edit the port Listen 80 to --> Listen 8080
-</br>
-<a href="https://imgur.com/HhujVVc"><img src="https://i.imgur.com/HhujVVc.png" title="source: imgur.com" /></a>
+    HOSTNAME=myserver.domain.com
+    127.0.0.1      localhost localhost.localdomain
 
-
-Fireware Settings:
------------------------
-
-    sudo systemctl enable firewalld
-    sudo systemctl start firewalld
-    systemctl status firewalld
-
-
-Allow Apache Through the Firewall
---------------------------------------
-
-    sudo firewall-cmd --permanent --add-port=80/tcp
-    sudo firewall-cmd --permanent --add-port=443/tcp
-    sudo firewall-cmd --reload
-
-
-
-Now Disable SELinux:
---------------------------
-
-    $ yum provides /usr/sbin/semanage
-    $ yum -y install policycoreutils-python
-    $ sudo setenforce 0
-    $ sudo vi /etc/selinux/config
-
-
-    #This file controls the state of SELinux on the system.
-    #SELINUX= can take one of these three values:
-    #enforcing - SELinux security policy is enforced.
-    #permissive - SELinux prints warnings instead of enforcing.
-    #disabled - No SELinux policy is loaded.
-    SELINUX=disabled
-    #SELINUXTYPE= can take one of these two values:
-    #targeted - Targeted processes are protected,
-    #mls - Multi Level Security protection.
-    SELINUXTYPE=targeted
+    [root@localhost ~]# /etc/init.d/network restart
+    [root@localhost ~]# cd /opt/
+    [root@localhost opt]# cd tomcat/
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh shutdown
+    [root@localhost bin]# ./catalina.sh start
     
-    $sudo shutdown -r now
-    $sestatus
-    [vagrant@localhost ~]$ sudo systemctl restart httpd.service
-
---> info.php file is located in "/var/www/html" Path:
-```
-#info.php
-<?php
-phpinfo();
-?>
-
-```
-
-http://192.168.33.10/info.php 
-
-[
-note: this ip is come from vagrant file: For server you should use your ip address.
-
-    #Create a private network, which allows host-only access to the machine
-    #using a specific IP.
+Edit VagrantFile like below 2 lines:
+-------------------------------
+    config.vm.network "forwarded_port", guest: 80, host: 8080
     config.vm.network "private_network", ip: "192.168.33.10"
-  
+
+    $ vagrant reload --provision
+    $ vagrant ssh
+    [vagrant@localhost ~]$ cd /opt/tomcat
+    [vagrant@localhost tomcat]$ sudo su
+    [root@localhost tomcat]# cd bin/
+    [root@localhost bin]# ./catalina.sh start
+
+Now enter the link to your browser:
+--------------------------------------
+http://192.168.33.10:8080/
+</br> </br>
+<a href="https://imgur.com/bWqQKVK"><img src="https://i.imgur.com/bWqQKVK.png" title="source: imgur.com" /></a>
+
+Changing Default port:
+------------------------
+    cd /opt/tomcat/conf
+    vi server.xml
+    press i for insert then chnage the port from 8080 to 8090 according bellow
+    <Connector port="8090" protocol="HTTP/1.1"
+          connectionTimeout="20000"
+          redirectPort="8443"/>      
+ </br> </br>
+<a href="https://imgur.com/QQsW33t"><img src="https://i.imgur.com/QQsW33t.png" title="source: imgur.com" /></a>
+
+press Esc
+:wq and press enter.
+exit from centos7
+go to "/vagrant/centos7/" folder
+    
+    vagrant reload --provision
+    vagrant ssh
+    cd /opt/tomcat
+    sudo su
+    cd bin/
+    ./catalina.sh start
+
+now http://192.168.33.10:8090/
+
+Done!
+
+[Note: For AWS Server also need to change like bellow:
+ </br> </br>
+<a href="https://imgur.com/4XarPTt"><img src="https://i.imgur.com/4XarPTt.png" title="source: imgur.com" /></a>
 ]
 
-or
+For Access manager app:
+---------------------------------
+go to centos7 then enter bellow command:
 
-http://localhost:8080/info.php
+    $ find / -name context.xml
+    $ vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
+    <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+ </br> </br>
+<a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
+         
+    $ vi /opt/tomcat/webapps/manager/META-INF/context.xml
 
+    <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+ </br> </br>
+<a href="https://imgur.com/0QdNvxg"><img src="https://i.imgur.com/0QdNvxg.png" title="source: imgur.com" /></a>
 
-Laravel Project Configuration:
--------------------------------------
-1. Create laravel project
+    $ cd /opt/tomcat/conf
+    $ vi tomcat-users.xml
+    <role rolename="manager-gui"/>
+    <role rolename="manager-script"/>
+    <role rolename="manager-jmx"/>
+    <role rolename="manager-status"/>
 
-2. Move the project to "/var/www/html/" path.
+    <user username="admin" password="admin" roles="manager-gui,manager-script, manager-jmx, manager-status"/>
+    <user username="deployer" password="deployer" roles="manager-sript"/>
+    <user username="tomcat" password="s3cret" roles="manager-gui"/>
+</br> </br>
+<a href="https://imgur.com/SSs8dLD"><img src="https://i.imgur.com/SSs8dLD.png" title="source: imgur.com" /></a>
 
-3. go to "/var/www/html/my_app"
+    $ vagrant reload --provision
+    $ vagrant ssh
 
+Restart Tomcat-server.
 
-Check Apache Group:
----------------------
+http://192.168.33.10:8090/
 
-    ps aux | egrep '(apache|httpd)'
+and press manager app button.
 
-
-Change Ownership:
----------------------
-
-    sudo chown -R $USER:apache storage
-    sudo chown -R $USER:apache bootstrap/cache
-
-
-Then to set directory permission try this:
---------------------------------------------
-
-    chmod -R 775 storage
-    chmod -R 775 bootstrap/cache
-
-</br>
-<a href="https://imgur.com/nNkFVaq"><img src="https://i.imgur.com/nNkFVaq.png" title="source: imgur.com" /></a>
-
-Create Virtual Host For this Project:
-------------------------------------------
-Step 1: Go to "/var/www/html/etc/httpd/conf.d/"
-
-    sudo touch my_app.conf
-    sudo vi my_app.conf
-
-    <VirtualHost *:80>
-        ServerName localhost
-        ServerAlias localhost
-        ServerAdmin webmaster@example.com
-        DocumentRoot /var/www/my_app/public
-            <Directory /var/www/my_app/public>
-                Options -Indexes
-                DirectoryIndex index.php index.html
-                AllowOverride All
-                Require all granted
-<<<<<<< HEAD
-          </Directory>
-        ErrorLog ${APACHE_LOG_DIR}/my_second_project_name-error.log
-        CustomLog ${APACHE_LOG_DIR}/my_second_project_name-access.log combined
-    </VirtualHost>
-    
-Enable the New Virtual Host Files:
------------------------------------
-    sudo a2ensite example.com.conf
-    sudo a2ensite test.com.conf
-    
-disable the default site defined in 000-default.conf:
--------------------------------------------------------
-    sudo a2dissite 000-default.conf
-    
- Now restart Apache server:
- ---------------------------
-    sudo service apache2 restart
-    
-If you haven’t been using actual domain names that you own to test this procedure and have been using some example domains instead, you can at least test the functionality of this process by temporarily modifying the hosts file on your local computer.
-
-    sudo nano /etc/hosts
-    
-The details that you need to add are the public IP address of your VPS server followed by the domain you want to use to reach that VPS.
-
-For the domains that I used in this guide, assuming that my VPS IP address is 111.111.111.111, I could add the following lines to the bottom of my hosts file:
-
-    127.0.0.1   localhost
-    127.0.1.1   guest-desktop
-    111.111.111.111 example.com
-    111.111.111.111 test.com
-    
-Test your Results:
--------------------
-    http://example.com
-    http://test.com
-
-References
-------------
-https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-16-04
-=======
-           </Directory>
-        ErrorLog /var/log/httpd/my_app-error.log
-        CustomLog /var/log/httpd/my_app-access.log combined
-    </VirtualHost>
-
-    sudo systemctl restart httpd.service
-    sudo systemctl status httpd.service
-
-
-</br>
-<a href="https://imgur.com/EqM0K4G"><img src="https://i.imgur.com/EqM0K4G.png" title="source: imgur.com" /></a>
-
-Now Hit:
-
-http://localhost:8080/my_app or http://localhost:8080/ or ip_address
-
-
-
->>>>>>> cdd283920038466aa325b7de8e053dae7ad29863
+username: tomcat, pass: s3cret
+</br> </br>
+<a href="https://imgur.com/GjhznDK"><img src="https://i.imgur.com/GjhznDK.png" title="source: imgur.com" /></a>
