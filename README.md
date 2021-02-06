@@ -1,109 +1,147 @@
-# Apache-Install-Ubuntu And Virtual Host Configuration
-Apache Server Configuration Ubuntu
+# ApacheServerCentos7
+Apache install in centos7
 
-Note: Before set up Apache you must have to install PHP: https://github.com/mrafiq709/PHP-install-ubuntu
+1.Install Apache in CentOS:
+---------------------------
+    sudo yum clean all
+    sudo yum -y update
+    sudo yum -y install httpd
+    rpm -q centos-release
+    sudo systemctl start httpd.service
+    sudo systemctl enable httpd.service
+    sudo systemctl status httpd.service
 
-Command:
----------
-    sudo apt update
-    sudo apt install apache2
-    sudo ufw app list
-    sudo ufw allow 'Apache'
-    sudo ufw status
-    sudo systemctl status apache2
-    sudo systemctl restart apache2
-    http://your_server_ip
-    
-Give Permission To Access Your Project:
----------------------------------------
-    sudo mkdir /var/www/html/my_project
-    sudo chown -R $USER:$USER /var/www/html/my_project
-    sudo chmod -R 755 /var/www/html/my_project
-    
-If you have no project then create index.html for testing:
-----------------------------------------------------------
-    nano /var/www/html/my_project/index.html
-    Enter bellow code for testing:
-    
-    <html>
-    <head>
-        <title>Welcome to Your_domain!</title>
-    </head>
-    <body>
-        <h1>Success!  The your_domain virtual host is working!</h1>
-    </body>
-    </html>
-    
-Setting Up Virtual Hosts:
+http://localhost:8080/
+
+Done !
+
+For Running php project configure like below
+----------------------------------------------------
+
+    sudo vi  /etc/httpd/conf/httpd.conf
+</br>
+<a href="https://imgur.com/8yQkS0i"><img src="https://i.imgur.com/8yQkS0i.png" title="source: imgur.com" /></a>
+
+Note: For AWS server You have to edit the port Listen 80 to --> Listen 8080
+</br>
+<a href="https://imgur.com/HhujVVc"><img src="https://i.imgur.com/HhujVVc.png" title="source: imgur.com" /></a>
+
+
+Fireware Settings:
+-----------------------
+
+    sudo systemctl enable firewalld
+    sudo systemctl start firewalld
+    systemctl status firewalld
+
+
+Allow Apache Through the Firewall
+--------------------------------------
+
+    sudo firewall-cmd --permanent --add-port=80/tcp
+    sudo firewall-cmd --permanent --add-port=443/tcp
+    sudo firewall-cmd --reload
+
+
+
+Now Disable SELinux:
 --------------------------
-    sudo nano /etc/apache2/sites-available/project_name.conf
+
+    $ yum provides /usr/sbin/semanage
+    $ yum -y install policycoreutils-python
+    $ sudo setenforce 0
+    $ sudo vi /etc/selinux/config
+
+
+    #This file controls the state of SELinux on the system.
+    #SELINUX= can take one of these three values:
+    #enforcing - SELinux security policy is enforced.
+    #permissive - SELinux prints warnings instead of enforcing.
+    #disabled - No SELinux policy is loaded.
+    SELINUX=disabled
+    #SELINUXTYPE= can take one of these two values:
+    #targeted - Targeted processes are protected,
+    #mls - Multi Level Security protection.
+    SELINUXTYPE=targeted
     
+    $sudo shutdown -r now
+    $sestatus
+    [vagrant@localhost ~]$ sudo systemctl restart httpd.service
+
+--> info.php file is located in "/var/www/html" Path:
+```
+#info.php
+<?php
+phpinfo();
+?>
+
+```
+
+http://192.168.33.10/info.php 
+
+[
+note: this ip is come from vagrant file: For server you should use your ip address.
+
+    #Create a private network, which allows host-only access to the machine
+    #using a specific IP.
+    config.vm.network "private_network", ip: "192.168.33.10"
+  
+]
+
+or
+
+http://localhost:8080/info.php
+
+
+Laravel Project Configuration:
+-------------------------------------
+1. Create laravel project
+
+2. Move the project to "/var/www/html/" path.
+
+3. go to "/var/www/html/my_app"
+
+
+Check Apache Group:
+---------------------
+
+    ps aux | egrep '(apache|httpd)'
+
+
+Change Ownership:
+---------------------
+
+    sudo chown -R $USER:apache storage
+    sudo chown -R $USER:apache bootstrap/cache
+
+
+Then to set directory permission try this:
+--------------------------------------------
+
+    chmod -R 775 storage
+    chmod -R 775 bootstrap/cache
+
+</br>
+<a href="https://imgur.com/nNkFVaq"><img src="https://i.imgur.com/nNkFVaq.png" title="source: imgur.com" /></a>
+
+Create Virtual Host For this Project:
+------------------------------------------
+Step 1: Go to "/var/www/html/etc/httpd/conf.d/"
+
+    sudo touch my_app.conf
+    sudo vi my_app.conf
+
     <VirtualHost *:80>
+        ServerName localhost
+        ServerAlias localhost
         ServerAdmin webmaster@example.com
-        ServerName example.com
-        ServerAlias www.example.com
-        DocumentRoot /var/www/html/my_project_name/public
-           <Directory /var/www/html/my_project_name/public>
+        DocumentRoot /var/www/my_app/public
+            <Directory /var/www/my_app/public>
                 Options -Indexes
                 DirectoryIndex index.php index.html
                 AllowOverride All
                 Require all granted
-          </Directory>
-        ErrorLog ${APACHE_LOG_DIR}/my_project_name-error.log
-        CustomLog ${APACHE_LOG_DIR}/my_project_name-access.log combined
-    </VirtualHost>
-    
-    If MIME type errors for IE
-    ----------------------------
-    <VirtualHost *:80>
-        ServerName example.com
-        DocumentRoot /var/www/html/my_project_name/public
-        ErrorLog ${APACHE_LOG_DIR}/my_project_name-error.log
-        CustomLog ${APACHE_LOG_DIR}/my_project_name-access.log combined
-        <Directory /var/www/html/my_project_name/public>
-            Options Indexes FollowSymLinks
-            # MIME type errors for IE
-            <FilesMatch \.css$>
-                Header set Content-type "text/css"
-            </FilesMatch>
-            # MIME type errors for IE
-            <FilesMatch \.js$>
-                Header set Content-type "text/javascript"
-            </FilesMatch>
-            # MIME type for .svg files
-            <filesMatch "\.(svg|svgz)$">
-               FileETag None
-               <ifModule mod_headers.c>
-                   Header set Content-type "image/svg+xml"
-               </ifModule>
-            </filesMatch>
-
-            AllowOverride All
-            Options +FollowSymLinks
-            Require all granted
-            DirectoryIndex index.php index.html
-        </Directory>
-
-        RewriteEngine on
-        RewriteCond %{SERVER_NAME} =example.com [OR]
-        RewriteCond %{SERVER_NAME} =example2.com
-        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-
-    </VirtualHost>
-    
-Second Virtual Host [if you want to add another project]:
----------------------------------------------------------
-
-    <VirtualHost *:80>
-        ServerAdmin webmaster@example.com
-        ServerName test.com
-        ServerAlias www.test.com
-        DocumentRoot /var/www/html/my_second_project_name/public
-          <Directory /var/www/html/my_second_project_name/public>
-                Options -Indexes
-                DirectoryIndex index.php index.html
-                AllowOverride All
-                Require all granted
+<<<<<<< HEAD
           </Directory>
         ErrorLog ${APACHE_LOG_DIR}/my_second_project_name-error.log
         CustomLog ${APACHE_LOG_DIR}/my_second_project_name-access.log combined
@@ -143,3 +181,23 @@ Test your Results:
 References
 ------------
 https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-16-04
+=======
+           </Directory>
+        ErrorLog /var/log/httpd/my_app-error.log
+        CustomLog /var/log/httpd/my_app-access.log combined
+    </VirtualHost>
+
+    sudo systemctl restart httpd.service
+    sudo systemctl status httpd.service
+
+
+</br>
+<a href="https://imgur.com/EqM0K4G"><img src="https://i.imgur.com/EqM0K4G.png" title="source: imgur.com" /></a>
+
+Now Hit:
+
+http://localhost:8080/my_app or http://localhost:8080/ or ip_address
+
+
+
+>>>>>>> cdd283920038466aa325b7de8e053dae7ad29863
